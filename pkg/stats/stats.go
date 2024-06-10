@@ -120,9 +120,10 @@ func (m *metricsProvider) NewGauge(name string, labels []string) SetInstrument {
 
 func (m *metricsProvider) NewHistogram(name string, labels []string, buckets []float64) SetInstrument {
 	h := prometheus.NewHistogramVec(prometheus.HistogramOpts{
-		Namespace: ebpfNamespace,
-		Name:      name,
-		Buckets:   buckets,
+		Namespace:                   ebpfNamespace,
+		Name:                        name,
+		Buckets:                     buckets,
+		NativeHistogramBucketFactor: 1.1,
 	}, labels)
 
 	m.register(h)
